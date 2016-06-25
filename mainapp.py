@@ -4,6 +4,7 @@ import flask
 import httplib2
 
 from apiclient import discovery
+from flask.templating import render_template
 from oauth2client import client
 
 app = flask.Flask(__name__)
@@ -11,6 +12,11 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def index():
+    return render_template('main.html')
+
+
+@app.route('/google')
+def google():
     if 'credentials' not in flask.session:
         return flask.redirect(flask.url_for('oauth2callback'))
     credentials = client.OAuth2Credentials.from_json(flask.session['credentials'])
